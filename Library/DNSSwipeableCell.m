@@ -21,7 +21,7 @@
 @implementation DNSSwipeableCell
 
 #pragma mark - Initialization
-- (void)commonInit
+- (void)awakeFromNib
 {
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     
@@ -29,7 +29,10 @@
     self.buttons = [NSMutableArray array];
     
     //setup content view
-    self.myContentView = [[UIView alloc] init];
+    if (self.myContentView == nil)
+    {
+        self.myContentView = [[UIView alloc] init];
+    }
     self.myContentView.userInteractionEnabled = YES;
     self.myContentView.clipsToBounds = YES;
     
@@ -42,33 +45,6 @@
     UIPanGestureRecognizer *panRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panThisCell:)];
     panRecognizer.delegate = self;
     [self.myContentView addGestureRecognizer:panRecognizer];
-}
-
-- (id)init
-{
-    if (self = [super init]) {
-        [self commonInit];
-    }
-    
-    return self;
-}
-
-- (id)initWithCoder:(NSCoder *)aDecoder
-{
-    if (self = [super initWithCoder:aDecoder]) {
-        [self commonInit];
-    }
-    
-    return self;
-}
-
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
-{
-    if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
-        [self commonInit];
-    }
-    
-    return self;
 }
 
 #pragma mark - Cell Lifecycle
